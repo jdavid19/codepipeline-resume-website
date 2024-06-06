@@ -43,11 +43,4 @@ Before you begin, make sure you have the following:
 
 - [Boto3 Documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
 - [AWS SDK for Python (Boto3) GitHub Repository](https://github.com/boto/boto3)
-
-## Contributing
-
-Contributions are welcome! If you find any issues or want to add new features, feel free to open a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+- [AWS SDK for Python (Boto3) AWS Documentation](https://docs.aws.amazon.com/pythonsdk/?icmpid=docs_homepage_sdktoolkits)
