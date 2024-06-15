@@ -66,7 +66,6 @@ class CertificateManager():
     def get_cname_record(self, certificate_arn):
         cname_record = self.certificate_manager.get_certificate_cname(certificate_arn)
         return cname_record
-
     
 class CloudFront():
     def __init__(self, distribution_data):
@@ -186,7 +185,6 @@ def main():
     # Create CNAME record in Route 53
     cname_response = hostedzone_manager.create_cname_record(hostedzone_id, cname_record)
     print("CNAME record created:", cname_response)
-
 
     """
     Step 6: Create CloudFront Distribution
