@@ -31,7 +31,8 @@ class AWSCertificateManager:
                 if 'ResourceRecord' in options[0]:
                     return options[0]['ResourceRecord']
                 print('Waiting for certificate validation options...')
-                time.sleep(10)
+                waiter = self.acm_client.get_waiter('certificate_validated')
+                waiter.wait(CertificateArn= certificate_arn)
         except self.acm_client.exceptions.ResourceNotFoundException as e:
             print(f"Resource not found. {e}")
         except bexcept.ClientError as e:
