@@ -30,10 +30,8 @@ class CloudFrontDistribution():
         distribution_definition = {
             'CallerReference': str(time.time()),
             'Aliases': {
-                'Quantity': 1,
-                'Items': [
-                    self.cname,
-                ]
+                'Quantity': len(self.cname),
+                'Items': self.cname
             },
             'DefaultRootObject': self.root_object,
             'Origins': {
@@ -61,7 +59,7 @@ class CloudFrontDistribution():
             'Enabled': True, #  enable or disable the selected distribution.
             'ViewerCertificate': {
                 'CloudFrontDefaultCertificate': False,
-                'ACMCertificateArn': 'arn:aws:acm:us-east-1:575071089155:certificate/6f7b3201-56b4-43ad-b893-ff19e12946e3', # provide the Amazon Resource Name (ARN) of the ACM certificate. CloudFront only supports ACM certificates in the US East (N. Virginia) Region ( us-east-1).
+                'ACMCertificateArn': self.certificate_arn, # provide the Amazon Resource Name (ARN) of the ACM certificate. CloudFront only supports ACM certificates in the US East (N. Virginia) Region ( us-east-1).
                 'SSLSupportMethod': 'sni-only',
                 'MinimumProtocolVersion': 'TLSv1.2_2021',
             },
