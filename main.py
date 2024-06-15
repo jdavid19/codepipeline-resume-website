@@ -33,25 +33,12 @@ class PipelineS3Github():
 
 class Route53HostedZone():
     def __init__(self, hostedzone_data):
-<<<<<<< HEAD
-        self.domain_name = hostedzone_data['domain_name']
-=======
         #self.domain_name = hostedzone_data['domain_name']
->>>>>>> 5904eb0 (Update main execution file.)
         self.record_action = hostedzone_data['record_action']
         self.alias_target_dns = hostedzone_data['alias_target_dns']
         self.alias_hosted_zone_id = hostedzone_data['alias_hosted_zone_id']
         self.route53_manager = Route53Manager()
 
-<<<<<<< HEAD
-    def create_hostedzone(self):
-        hosted_zone_id = self.route53_manager.create_hosted_zone(self.domain_name)
-        return hosted_zone_id
-    
-    def create_A_record(self, hosted_zone_id):
-        alias_a_record_response = self.route53_manager.create_alias_a_record(
-            hosted_zone_id, self.record_action, self.domain_name, self.alias_target_dns, self.alias_hosted_zone_id
-=======
     def create_hostedzone(self, domain_name):
         hosted_zone_id = self.route53_manager.create_hosted_zone(domain_name)
         return hosted_zone_id
@@ -59,7 +46,6 @@ class Route53HostedZone():
     def create_A_record(self, hosted_zone_id, domain_name):
         alias_a_record_response = self.route53_manager.create_alias_a_record(
             hosted_zone_id, self.record_action, domain_name, self.alias_target_dns, self.alias_hosted_zone_id
->>>>>>> 5904eb0 (Update main execution file.)
         )
         print("Alias A record created:", alias_a_record_response)
 
@@ -68,14 +54,6 @@ class Route53HostedZone():
         return cname_response 
 
 class CertificateManager():
-<<<<<<< HEAD
-    def __init__(self, domain_name):
-        self.domain_name = domain_name
-        self.certificate_manager = AWSCertificateManager()
-
-    def request_public_certificate(self):
-        certificate_arn = self.certificate_manager.request_certificate(self.domain_name)
-=======
     def __init__(self, domain_name, alt_name):
         self.domain_name = domain_name
         self.alt_name = alt_name
@@ -83,16 +61,11 @@ class CertificateManager():
 
     def request_public_certificate(self):
         certificate_arn = self.certificate_manager.request_certificate(self.domain_name, self.alt_name)
->>>>>>> 5904eb0 (Update main execution file.)
         return certificate_arn
     
     def get_cname_record(self, certificate_arn):
         cname_record = self.certificate_manager.get_certificate_cname(certificate_arn)
         return cname_record
-<<<<<<< HEAD
-=======
-
->>>>>>> 5904eb0 (Update main execution file.)
     
 class CloudFront():
     def __init__(self, distribution_data):
@@ -189,26 +162,16 @@ def main():
         'alias_hosted_zone_id' : 'Z3O0J2DXBE1FTB',
     }
     hostedzone_manager = Route53HostedZone(hostedzone_data)
-<<<<<<< HEAD
-    hostedzone_id = hostedzone_manager.create_hostedzone()
-    print(f"Hosted Zone created with ID: {hostedzone_id}")
-    hostedzone_manager.create_A_record(hostedzone_id)
-=======
     hostedzone_id = hostedzone_manager.create_hostedzone(hostedzone_data["domain_name"])
     print(f"Hosted Zone created with ID: {hostedzone_id}")
     hostedzone_manager.create_A_record(hostedzone_id, hostedzone_data["domain_name"])
     alt_name = f"*.{hostedzone_data['domain_name']}"
     hostedzone_manager.create_A_record(hostedzone_id, alt_name)
->>>>>>> 5904eb0 (Update main execution file.)
 
     """
     Step 4: Request public certificate from AWS Certificate Manager
     """
-<<<<<<< HEAD
-    certificate_manager = CertificateManager(hostedzone_data['domain_name'])
-=======
     certificate_manager = CertificateManager(hostedzone_data['domain_name'], alt_name)
->>>>>>> 5904eb0 (Update main execution file.)
     certificate_arn = certificate_manager.request_public_certificate()
     print(f"Certificate requested with ARN: {certificate_arn}")
 
@@ -223,28 +186,16 @@ def main():
     cname_response = hostedzone_manager.create_cname_record(hostedzone_id, cname_record)
     print("CNAME record created:", cname_response)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5904eb0 (Update main execution file.)
     """
     Step 6: Create CloudFront Distribution
         Giving the origin access control permission to access the S3 bucket
     """
     distribution_data = {
-<<<<<<< HEAD
-        'cname' : f"{hostedzone_data['domain_name']}",
-        'root_object' : 'index.html',
-        'domain_id' : f'{bucket_name}.s3.{region}.amazonaws.com',
-        'cache_policy_id' : '4135ea2d-6df8-44a3-9df3-4b5a84be39ad', # CachingDisabled https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html
-        'comment' : f'Test Distribution for {bucket_name}',
-=======
         'cname' : [f"{hostedzone_data['domain_name']}", alt_name],
         'root_object' : 'index.html',
         'domain_id' : f'{bucket_name}.s3.{region}.amazonaws.com',
         'cache_policy_id' : '4135ea2d-6df8-44a3-9df3-4b5a84be39ad', # CachingDisabled https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html
         'comment' : f'Distribution for {bucket_name}',
->>>>>>> 5904eb0 (Update main execution file.)
         'certificate_arn' : certificate_arn
     }
 
@@ -265,12 +216,8 @@ def main():
         'alias_hosted_zone_id' : 'Z2FDTNDATAQYW2' #This is always the hosted zone ID when you create an alias record that routes traffic to a CloudFront distribution. https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-recordset-aliastarget.html
     })
     hostedzone_manager = Route53HostedZone(hostedzone_data)
-<<<<<<< HEAD
-    hostedzone_manager.create_A_record(hostedzone_id)
-=======
     hostedzone_manager.create_A_record(hostedzone_id, hostedzone_data['domain_name'])
     hostedzone_manager.create_A_record(hostedzone_id, alt_name)
->>>>>>> 5904eb0 (Update main execution file.)
 
 
 if __name__ == "__main__":
