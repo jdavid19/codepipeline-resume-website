@@ -6,11 +6,14 @@ class AWSCertificateManager:
     def __init__(self, region_name='us-east-1'):
         self.acm_client = boto3.client('acm', region_name=region_name)
 
-    def request_certificate(self, domain_name, validation_method='DNS'):
+    def request_certificate(self, domain_name, alt_name, validation_method='DNS'):
         try:
             response = self.acm_client.request_certificate(
                 DomainName=domain_name,
-                ValidationMethod=validation_method
+                ValidationMethod=validation_method,
+                SubjectAlternativeNames=[
+                    alt_name,
+                ]
             )
             return response['CertificateArn']
         except self.acm_client.exceptions.InvalidDomainValidationOptionsException as e:
