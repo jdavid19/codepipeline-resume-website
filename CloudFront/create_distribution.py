@@ -56,6 +56,7 @@ class CloudFrontDistribution():
                 'ResponseHeadersPolicyId': self.header_policy_id,
             },
             'Comment': self.comment, # Describe distribution
+            'PriceClass': 'PriceClass_100',
             'Enabled': True, #  enable or disable the selected distribution.
             'ViewerCertificate': {
                 'CloudFrontDefaultCertificate': False,
