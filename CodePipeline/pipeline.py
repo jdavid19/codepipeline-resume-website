@@ -57,7 +57,7 @@ class CodePipeline:
     def create_pipeline(self):
         pipeline_definition = {
             'name': self.pipeline_name,
-            'roleArn': 'arn:aws:iam::575071089155:role/service-role/AWSCodePipelineServiceRole-ap-southeast-1-jd-espiritu-resume-pi',
+            'roleArn': '', # Enter IAM Role ARN
             'artifactStore': {
                 'type': 'S3',
                 'location': self.artifact_bucket, 
@@ -76,7 +76,7 @@ class CodePipeline:
                             },
                             'runOrder': 1,
                             'configuration': {
-                                'ConnectionArn': 'arn:aws:codestar-connections:ap-southeast-1:575071089155:connection/1cc664a9-aa8c-4a4b-a715-cfafe62685c9',
+                                'ConnectionArn': '', # Enter IAM Role ARN (CodeStar Connections)
                                 'FullRepositoryId': f'{self.github_username}/{self.github_repo}',
                                 'BranchName': self.github_branch,
                                 'OutputArtifactFormat': 'CODE_ZIP',
