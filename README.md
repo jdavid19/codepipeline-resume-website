@@ -1,6 +1,6 @@
 # Python Project with Boto3
 
-This project is a Python application that utilizes the Boto3 library to interact with various AWS services programmatically. This Python application is based on my resume website project [Deploying a Static Website with Amazon S3, AWS CodePipeline, Amazon Route 53, and Amazon CloudFront.](https://github.com/jdavid19/resume-website-v2/tree/main)
+This project is a Python application that utilizes the Boto3 library to interact with various AWS services programmatically. This Python application is based on my resume website project [Deploying a Static Website using AWS.](https://github.com/jdavid19/resume-website-v2/tree/main)
 
 ## Prerequisites
 
@@ -37,7 +37,9 @@ Before you begin, make sure you have the following:
 
 5. Run the Python script/s (main.py) to interact with AWS services.
 
+## Future Considerations
 
+- Integrate Boto3 (AWS SDK) with Infrastructure as Code practices for better approach in managing and automating AWS resources.
 
 ## Additional Resources
 
